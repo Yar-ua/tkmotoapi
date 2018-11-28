@@ -8,8 +8,9 @@ class User < ActiveRecord::Base
          :confirmable
   include DeviseTokenAuth::Concerns::User
 
+  validates :name, presence: true
+  validates :email, presence: true
   validates :email, uniqueness: {message: 'Current email already exists, try another'}
   validates :name, uniqueness: {message: 'Current name already exists, try another'}
-  validates :name, :email, presence: {messaage: 'Value must be present'}
   
 end
