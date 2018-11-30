@@ -83,8 +83,21 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  # Use https://mailcatcher.me/ to catch e-mail confirmation
-  config.action_mailer.default_url_options = { host: 'localhost:3000' }
-  # config.action_mailer.delivery_method = :smtp
-  # config.action_mailer.smtp_settings = { address: 'localhost', port: 3000 }
+  # Settings for production - with google server
+  config.action_mailer.delivery_method = :smtp 
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.default_options = { from: 'tkmoto.ua@gmail.com' }
+  config.action_mailer.default_url_options = { :host => 'cinema-booking.herokuapp.com' }
+  config.action_mailer.smtp_settings = {
+        :address        => 'smtp.gmail.com',
+        :domain         => 'gmail.com',
+        :port           => 587,
+        # :user_name      => ENV['моя почта'],
+        :user_name      => ENV['tkmoto.ua@gmail.com'],
+        # :password       => ENV['полученый пароль'],
+        :password       => ENV['tkmoto1tkmoto'],
+        :authentication => :plain
+        :enable_starttls_auto => true
+  }
+  config.action_mailer.raise_delivery_errors = true
 end
