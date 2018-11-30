@@ -96,7 +96,7 @@ Rails.application.configure do
         :user_name      => ENV['tkmoto.ua@gmail.com'],
         # :password       => ENV['полученый пароль'],
         :password       => ENV['tkmoto1tkmoto'],
-        :authentication => :plain
+        :authentication => :plain,
         :enable_starttls_auto => true
   }
   config.action_mailer.raise_delivery_errors = true
