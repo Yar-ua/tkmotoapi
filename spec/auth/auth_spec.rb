@@ -41,21 +41,20 @@ RSpec.describe "Auth", :type => :request do
     end
  end
 
-  describe 'Testing confirm registration: GET /auth/confirmation' do
-    before do
-      registration
-    end
+  # describe 'Testing confirm registration: GET /auth/confirmation' do
+  #   before do
+  #     registration
+  #   end
 
-    it 'should respond with 301 REDIRECTION' do
-      register_confirmation
-      expect(response).to be_redirect
-    end
-  end
+  #   it 'should respond with 301 REDIRECTION' do
+  #     register_confirmation
+  #     expect(response).to be_redirect
+  #   end
+  # end
 
   describe 'Testing login: POST /auth/sign_in' do
     before do
       registration
-      register_confirmation
       sign_in
       @auth_params = get_auth_params_from_login_response_headers(response)
     end
@@ -93,7 +92,7 @@ RSpec.describe "Auth", :type => :request do
   describe 'Testing reset password' do
     before do
       registration
-      register_confirmation
+      # register_confirmation
       sign_in
       @auth_params = get_auth_params_from_login_response_headers(response)
       post user_password_path(email: @registration_params[:email], 

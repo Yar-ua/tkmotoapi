@@ -55,3 +55,4 @@ gem 'rspec-rails', :group => [:development, :test]
 gem 'devise_token_auth'
 # gem for crossbrowser requests
 gem 'rack-cors', :require => 'rack/cors'
+gem 'omniauth-facebook'

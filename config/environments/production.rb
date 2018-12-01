@@ -84,6 +84,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Settings for production - with google server
+  # @TODO must use sendgrid on heroku, read it
   config.action_mailer.delivery_method = :smtp 
   config.action_mailer.perform_deliveries = true
   config.action_mailer.default_options = { from: 'tkmoto.ua@gmail.com' }

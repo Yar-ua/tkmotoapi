@@ -9,6 +9,6 @@ class HomeController < ApplicationController
   end
 
   def secure
-    send_response("Secure area, only for register users.")
+    send_response("Secure area, only for register users. If you watch it - you signed in")
   end
 end

@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'tkmotoapi@gmail.com'
+  default from: 'tkmoto.ua@gmail.com'
   layout 'mailer'
 end
