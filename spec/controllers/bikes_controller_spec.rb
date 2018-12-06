@@ -7,5 +7,62 @@ RSpec.describe BikesController, type: :controller do
     expect(response.status).to eq(401)
     post :create
     expect(response.status).to eq(401)
+    get :show, params: {id: 1}
+    expect(response.status).to eq(401)
+    put :update, params: {id: 1}
+    expect(response.status).to eq(401)
+    delete :destroy, params: {id: 1}
+    expect(response.status).to eq(401)
   end
+
+  describe 'when user authenticated' do
+    describe 'testing Creat, Read' do
+      before do
+        @user = FactoryBot.create(:user)
+        @bike = FactoryBot.attributes_for(:bike, user: @user)
+        request.headers.merge! @user.create_new_auth_token
+      end
+
+      it 'get index page' do
+        get :index
+        expect(response.status).to eq(200)
+      end
+
+      it 'create bike' do
+        post :create, params: @bike
+        expect(response.status).to eq(200)
+        expect(@user.bikes.count).to be > 0
+      end
+    end
+
+    describe 'testing Show Update Delete' do
+      before do
+        @user = FactoryBot.create(:user)
+        @bike = FactoryBot.create(:bike, user: @user)
+        request.headers.merge! @user.create_new_auth_token
+      end
+
+      it 'show bike' do
+        get :show, params: {id: @bike.id}
+        expect(response.status).to eq(200)
+        expect(response.body).to eq(@bike.to_json)
+      end
+
+      it 'update bike' do
+        @bike.name = 'Yamaha KLX'
+        put :update, params: {id: @bike.id, name: @bike.name}
+        expect(response.status).to eq(200)
+        expect(Bike.find(@bike.id)[:name]).to eq(@bike.name)
+      end
+
+      it 'destroy bike' do
+        delete :destroy, params: {id: @bike.id}
+        expect(response.status).to eq(200)
+        expect(Bike.exists?(@bike.id)).to be false
+      end
+
+    end
+  end
+
+
 end
