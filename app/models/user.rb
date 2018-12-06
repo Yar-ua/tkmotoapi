@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
          # :confirmable
   include DeviseTokenAuth::Concerns::User
 
+  has_many :bikes, dependent: :destroy
+
   validates :name, presence: true
   validates :email, presence: true
   validates :email, uniqueness: {message: 'Current email already exists, try another'}
