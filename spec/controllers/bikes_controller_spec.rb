@@ -38,6 +38,7 @@ RSpec.describe BikesController, type: :controller do
     describe 'testing Show Update Delete' do
       before do
         @user = FactoryBot.create(:user)
+        @another_user = FactoryBot.create(:user)
         @bike = FactoryBot.create(:bike, user: @user)
         request.headers.merge! @user.create_new_auth_token
       end
@@ -48,11 +49,25 @@ RSpec.describe BikesController, type: :controller do
         expect(response.body).to eq(@bike.to_json)
       end
 
+      it 'update bike forbidden if user is not bike owner' do
+        request.headers.merge! @another_user.create_new_auth_token
+        @new_name = 'Yamaha KLX'
+        put :update, params: {id: @bike.id, name: @new_name}
+        expect(response.status).to eq(422)
+      end
+
       it 'update bike' do
-        @bike.name = 'Yamaha KLX'
-        put :update, params: {id: @bike.id, name: @bike.name}
+        @new_name = 'Yamaha KLX'
+        put :update, params: {id: @bike.id, name: @new_name}
         expect(response.status).to eq(200)
-        expect(Bike.find(@bike.id)[:name]).to eq(@bike.name)
+        expect(Bike.find(@bike.id)[:name]).to eq(@new_name)
+      end
+
+      it 'destroy bike forbidden if user is not bike owner' do
+        request.headers.merge! @another_user.create_new_auth_token
+        delete :destroy, params: {id: @bike.id}
+        expect(response.status).to eq(422)
+        expect(Bike.exists?(@bike.id)).to be true
       end
 
       it 'destroy bike' do
