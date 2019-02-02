@@ -53,7 +53,7 @@ class BikesController < ApplicationController
   private
 
   def bike_params
-    params.permit(:name, :volume, :year, :colour)
+    params.permit(:name, :volume, :year, :color)
   end
 
   def set_bike
