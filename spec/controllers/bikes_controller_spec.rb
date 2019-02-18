@@ -2,12 +2,15 @@ require 'rails_helper'
 
 RSpec.describe BikesController, type: :controller do
 
-  it 'forbidden for unregistred users' do
+  it 'index and show - permitted for unregistred users' do
     get :index
-    expect(response.status).to eq(401)
-    post :create
-    expect(response.status).to eq(401)
+    expect(response.status).to eq(200)
     get :show, params: {id: 1}
+    expect(response.status).to eq(404) # 404 - cauze bike is not created, so he's response must be 'not found'
+  end
+
+  it 'forbidden for unregistred users' do
+    post :create
     expect(response.status).to eq(401)
     put :update, params: {id: 1}
     expect(response.status).to eq(401)
@@ -46,7 +49,7 @@ RSpec.describe BikesController, type: :controller do
       it 'show bike' do
         get :show, params: {id: @bike.id}
         expect(response.status).to eq(200)
-        expect(response.body).to eq(@bike.to_json)
+        expect(response.body).to include(@bike.to_json)
       end
 
       it 'update bike forbidden if user is not bike owner' do
