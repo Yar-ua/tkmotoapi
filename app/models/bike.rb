@@ -1,5 +1,6 @@
 class Bike < ApplicationRecord
   belongs_to :user
+  has_many :fuels
 
   validates :name, presence: { message: "" }
   validates :name, length: { maximum: 30, message: "Enter bike model, 30 symbols max" }
