@@ -27,10 +27,10 @@ ActiveRecord::Schema.define(version: 2019_02_22_222433) do
   end
 
   create_table "fuels", force: :cascade do |t|
-    t.decimal "odometer"
-    t.decimal "distance"
-    t.decimal "refueling"
-    t.decimal "price_fuel"
+    t.float "odometer", null: false
+    t.float "distance", null: false
+    t.float "refueling", null: false
+    t.float "price_fuel", null: false
     t.bigint "bike_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

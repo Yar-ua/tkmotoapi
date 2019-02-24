@@ -6,11 +6,8 @@ class Fuel < ApplicationRecord
   validates :odometer, 
             :distance, 
             :refueling, 
-            :price_fuel, length: { maximum: 8, message: "Value must have 10 symbols max" }
-  validates :odometer, 
-            :distance,
-            :refueling,
-            :price_fuel, numericality: { message: "Enter digits, not text" }
+            :price_fuel, length: { maximum: 10, message: "Value must have 10 symbols max" }
+
   validates :odometer, 
             :distance, 
             :refueling,

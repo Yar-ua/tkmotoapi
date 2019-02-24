@@ -17,7 +17,7 @@ class FuelsController < ApplicationController
         send_response(nil, 422, nil, @fuel.errors)
       end
     else
-      send_response(nil, 422, nil, 'Forbidden - you are not bike owner to create a fuel stata')
+      send_response(nil, 422, nil, 'Forbidden - you are not bike owner')
     end
   end
 
@@ -26,36 +26,55 @@ class FuelsController < ApplicationController
   end
 
   def update
+    if current_user_is_bike_owner
+      if @fuel.update(fuel_params)
+        send_response(@fuel, 200, [success: 'Fuel successfully updated'])
+      else
+        send_response(nil, 403, nil, @fuel.errors)
+      end
+    else
+      send_response(nil, 422, nil, 'Forbidden operation - You are not bike owner')
+    end   
   end
 
   def destroy
+
+    if current_user_is_bike_owner
+      if @fuel.destroy
+        send_response(nil, 200, success: 'Fuel was deleted')
+      else
+        send_response(nil, 422, nil, @fuel.errors)
+      end
+    else
+      send_response(nil, 422, nil, 'Forbidden operation - You are not bike owner')
+    end
+
   end
 
 
 
   private
 
+  def fuel_params
+    params.require(:fuel).permit(:odometer, :distance, :refueling, :price_fuel)
+  end
+
   def set_bike
     @bike = Bike.find(params[:bike_id])
     rescue ActiveRecord::RecordNotFound
-      send_response(nil, 404, nil, ['Bike not found'])
+      send_response(nil, 404, nil, 'Bike not found')
     return @bike
   end
 
   def set_fuel
     @fuel = Fuel.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      send_response(nil, 404, nil, ['Fuel\'s data not found'])
+      send_response(nil, 404, nil, 'Fuel\'s data not found')
     return @bike
   end
 
   def current_user_is_bike_owner
     return true if current_user.id == @bike.user_id
-    # if current_user.id == @bike.user_id
-    #   return true
-    # else
-    #   return false
-    # end
   end
 
 end

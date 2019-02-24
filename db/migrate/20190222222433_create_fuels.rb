@@ -1,10 +1,10 @@
 class CreateFuels < ActiveRecord::Migration[5.2]
   def change
     create_table :fuels do |t|
-      t.numeric   :odometer
-      t.numeric   :distance
-      t.numeric   :refueling
-      t.numeric   :price_fuel
+      t.float   :odometer, null: false
+      t.float   :distance, null: false
+      t.float   :refueling, null: false
+      t.float   :price_fuel, null: false
 
       t.references :bike, foreign_key: true
 
