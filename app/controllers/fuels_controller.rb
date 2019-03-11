@@ -17,7 +17,7 @@ class FuelsController < ApplicationController
         send_response(nil, 422, nil, @fuel.errors)
       end
     else
-      send_response(nil, 422, nil, 'Forbidden - you are not bike owner')
+      error_not_bike_owner
     end
   end
 
@@ -33,12 +33,11 @@ class FuelsController < ApplicationController
         send_response(nil, 403, nil, @fuel.errors)
       end
     else
-      send_response(nil, 422, nil, 'Forbidden operation - You are not bike owner')
+      error_not_bike_owner
     end   
   end
 
   def destroy
-
     if current_user_is_bike_owner
       if @fuel.destroy
         send_response(nil, 200, [success: 'Fuel was deleted'])
@@ -46,9 +45,8 @@ class FuelsController < ApplicationController
         send_response(nil, 422, nil, @fuel.errors)
       end
     else
-      send_response(nil, 422, nil, 'Forbidden operation - You are not bike owner')
+      error_not_bike_owner
     end
-
   end
 
 
@@ -74,6 +72,10 @@ class FuelsController < ApplicationController
 
   def current_user_is_bike_owner
     return true if current_user.id == @bike.user_id
+  end
+
+  def error_not_bike_owner
+    send_response(nil, 422, nil, 'Forbidden - You are not bike owner')
   end
 
 end
