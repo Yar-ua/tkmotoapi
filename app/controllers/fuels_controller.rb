@@ -41,7 +41,7 @@ class FuelsController < ApplicationController
 
     if current_user_is_bike_owner
       if @fuel.destroy
-        send_response(nil, 200, success: 'Fuel was deleted')
+        send_response(nil, 200, [success: 'Fuel was deleted'])
       else
         send_response(nil, 422, nil, @fuel.errors)
       end
@@ -50,7 +50,6 @@ class FuelsController < ApplicationController
     end
 
   end
-
 
 
   private

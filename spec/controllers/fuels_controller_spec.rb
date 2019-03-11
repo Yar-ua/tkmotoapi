@@ -126,7 +126,7 @@ RSpec.describe FuelsController, type: :controller do
       it 'fuel data can be deleted' do
         delete :destroy, params: {bike_id: @bike.id, id: @new_fuel.id}
         expect(response.status).to eq(200)
-        expect( JSON.parse(response.body)["alerts"]["success"] ).to eq('Fuel was deleted')
+        expect( JSON.parse(response.body)["alerts"][0] ).to eq('success' => 'Fuel was deleted')
       end
     end
 
