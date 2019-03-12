@@ -5,7 +5,7 @@ class HomeController < ApplicationController
   end
 
   def about
-    send_response("Information about API.", 200, [success: 'bar', warning: 'beta'])
+    send_response("Information about API.")
   end
 
   def secure

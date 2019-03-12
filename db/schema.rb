@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_06_000355) do
+ActiveRecord::Schema.define(version: 2019_03_11_185704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,27 @@ ActiveRecord::Schema.define(version: 2018_12_06_000355) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_bikes_on_user_id"
+  end
+
+  create_table "fuels", force: :cascade do |t|
+    t.float "odometer", null: false
+    t.float "distance", null: false
+    t.float "refueling", null: false
+    t.float "price_fuel", null: false
+    t.bigint "bike_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bike_id"], name: "index_fuels_on_bike_id"
+  end
+
+  create_table "repairs", force: :cascade do |t|
+    t.text "description"
+    t.text "detail"
+    t.float "price_detail"
+    t.bigint "bike_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bike_id"], name: "index_repairs_on_bike_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -55,4 +76,6 @@ ActiveRecord::Schema.define(version: 2018_12_06_000355) do
   end
 
   add_foreign_key "bikes", "users"
+  add_foreign_key "fuels", "bikes"
+  add_foreign_key "repairs", "bikes"
 end
