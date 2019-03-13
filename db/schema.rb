@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_13_182726) do
+ActiveRecord::Schema.define(version: 2019_03_13_200459) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bike_configs", force: :cascade do |t|
+    t.float "oil_change"
+    t.bigint "bike_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bike_id"], name: "index_bike_configs_on_bike_id"
+  end
 
   create_table "bikes", force: :cascade do |t|
     t.string "name"
@@ -83,6 +91,7 @@ ActiveRecord::Schema.define(version: 2019_03_13_182726) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "bike_configs", "bikes"
   add_foreign_key "bikes", "users"
   add_foreign_key "fuels", "bikes"
   add_foreign_key "repairs", "bikes"
