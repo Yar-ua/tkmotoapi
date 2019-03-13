@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
 
   has_many :bikes, dependent: :destroy
+  has_one :user_config
 
   validates :name, presence: true
   validates :email, presence: true
