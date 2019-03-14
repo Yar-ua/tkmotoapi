@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  # get 'bike_config/show'
+  # get 'bike_config/update'
   mount_devise_token_auth_for 'User', at: 'auth'
 
   # root for user config
@@ -9,6 +11,8 @@ Rails.application.routes.draw do
   resources :bikes, only: [:index, :create, :show, :update, :destroy] do
     resources :fuels, only: [:index, :create, :update, :destroy]
     resources :repairs, only: [:index, :create, :update, :destroy]
+    get '/config' => 'bike_config#show', as: 'bike_config'
+    put '/config' => 'bike_config#update', as: 'bike_config_upd'
   end
   
   root to: 'home#index'
