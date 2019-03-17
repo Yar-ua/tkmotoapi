@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  # get 'bike_config/show'
-  # get 'bike_config/update'
   mount_devise_token_auth_for 'User', at: 'auth'
 
   # root for user config

@@ -11,7 +11,7 @@ class BikeConfigController < ApplicationController
   def update
     if current_user_is_bike_owner
       if @bike_config.update_attributes(bike_config_params)
-        send_response(@user_config, 200, [success: 'Config successfully updated'])
+        send_response(@bike_config, 200, [success: 'Config successfully updated'])
       else
         send_response(nil, 403, nil, @bike_config.errors)
       end
@@ -30,7 +30,11 @@ class BikeConfigController < ApplicationController
   end
 
   def set_bike_config
-    @bike_config = @bike.bike_config
+    if @bike.bike_config == nil
+      create_default_config
+    else 
+      @bike_config = @bike.bike_config
+    end
   end
 
   def bike_config_params
@@ -45,4 +49,8 @@ class BikeConfigController < ApplicationController
     send_response(nil, 422, nil, 'Forbidden - You are not bike owner')
   end
 
+  def create_default_config
+    default_config = BikeConfig.create(bike_id: @bike.id, oil_change: 0)
+    @bike_config = default_config
+  end
 end

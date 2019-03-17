@@ -1,9 +1,9 @@
 class Bike < ApplicationRecord
   belongs_to :user
 
-  has_one  :bike_config
-  has_many :fuels
-  has_many :repairs
+  has_one  :bike_config, dependent: :destroy
+  has_many :fuels, dependent: :destroy
+  has_many :repairs, dependent: :destroy
 
   validates :name, presence: { message: "" }
   validates :name, length: { maximum: 30, message: "Enter bike model, 30 symbols max" }
