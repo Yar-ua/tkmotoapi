@@ -11,7 +11,7 @@ class BikeConfigController < ApplicationController
   def update
     if current_user_is_bike_owner
       if @bike_config.update_attributes(bike_config_params)
-        send_response(@bike_config, 200, [success: 'Config successfully updated'])
+        send_response(@bike_config, 200, [success: 'Config successfully saved'])
       else
         send_response(nil, 403, nil, @bike_config.errors)
       end
