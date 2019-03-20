@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_11_185704) do
+ActiveRecord::Schema.define(version: 2019_03_13_200459) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bike_configs", force: :cascade do |t|
+    t.float "oil_change"
+    t.bigint "bike_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bike_id"], name: "index_bike_configs_on_bike_id"
+  end
 
   create_table "bikes", force: :cascade do |t|
     t.string "name"
@@ -47,6 +55,14 @@ ActiveRecord::Schema.define(version: 2019_03_11_185704) do
     t.index ["bike_id"], name: "index_repairs_on_bike_id"
   end
 
+  create_table "user_configs", force: :cascade do |t|
+    t.text "language", default: "en"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_configs_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
@@ -75,7 +91,9 @@ ActiveRecord::Schema.define(version: 2019_03_11_185704) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "bike_configs", "bikes"
   add_foreign_key "bikes", "users"
   add_foreign_key "fuels", "bikes"
   add_foreign_key "repairs", "bikes"
+  add_foreign_key "user_configs", "users"
 end

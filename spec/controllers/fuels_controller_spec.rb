@@ -66,6 +66,20 @@ RSpec.describe FuelsController, type: :controller do
       end
     end
 
+    describe 'test fuellast route' do
+      before do
+        @fuel = FactoryBot.create(:fuel, bike: @bike)
+        request.headers.merge! @user.create_new_auth_token
+      end
+
+      it 'fuel can be shown' do
+        get :fuellast, params: { bike_id: @bike.id}
+        expect(response.status).to eq(200)
+        expect(response.content_type).to eq("application/json")
+        expect( JSON.parse(response.body)['data']['odometer'] ).to eq(@fuel.odometer)
+      end
+    end
+
     describe 'test :update route' do
       before do
         @new_fuel = FactoryBot.create(:fuel, bike: @bike)

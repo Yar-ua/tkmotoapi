@@ -1,5 +1,5 @@
 class FuelsController < ApplicationController
-  before_action :authenticate_user!, except: :index
+  before_action :authenticate_user!, except: [:index, :fuellast]
   before_action :set_bike
   before_action :set_fuel, only: [:show, :update, :destroy]
 
@@ -21,8 +21,8 @@ class FuelsController < ApplicationController
     end
   end
 
-  def show
-    send_response(@fuel)
+  def fuellast
+    send_response(@bike.fuels.order(odometer: :desc).first, 200)
   end
 
   def update
