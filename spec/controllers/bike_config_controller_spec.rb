@@ -8,9 +8,12 @@ RSpec.describe BikeConfigController, type: :controller do
       @bike_config = FactoryBot.create(:bike_config, bike: @bike)
     end
 
-    it "all bike config paths forbidden for unauthorized users" do
+    it "show bike config paths permitted for unauthorized users" do
       get :show, params: {bike_id: @bike.id}
-      expect(response.status).to eq(401)
+      expect(response.status).to eq(200)
+    end
+
+    it "update bike config paths forbidden for unauthorized users" do
       put :update, params: {bike_id: @bike.id}
       expect(response.status).to eq(401)
     end
