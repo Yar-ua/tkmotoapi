@@ -9,5 +9,8 @@
     15.times do
       FactoryBot.create(:repair, bike: bike)
     end
+    3.times do
+      FactoryBot.create(:oil, bike: bike)
+    end
   end
 end

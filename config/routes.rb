@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  # get 'oils/index'
+  # get 'oils/create'
   mount_devise_token_auth_for 'User', at: 'auth'
 
   # root for user config
@@ -11,6 +13,7 @@ Rails.application.routes.draw do
     match 'fuellast', to: 'fuels#fuellast', via: :get
 
     resources :repairs, only: [:index, :create, :update, :destroy]
+    resources :oils, only: [:index, :create]
     get '/config' => 'bike_config#show', as: 'bike_config'
     put '/config' => 'bike_config#update', as: 'bike_config_upd'
   end
