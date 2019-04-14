@@ -4,7 +4,7 @@ class FuelsController < ApplicationController
   before_action :set_fuel, only: [:show, :update, :destroy]
 
   def index
-    @fuels = Fuel.where(bike_id: @bike.id).order(created_at: :desc)
+    @fuels = Fuel.where(bike_id: @bike.id).order(odometer: :desc)
     send_response(@fuels, 200)
   end
 
@@ -22,7 +22,7 @@ class FuelsController < ApplicationController
   end
 
   def fuellast
-    send_response(@bike.fuels.order(odometer: :desc).first, 200)
+    send_response(@bike.fuels.maximum(:odometer), 200)
   end
 
   def update

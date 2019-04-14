@@ -76,7 +76,7 @@ RSpec.describe FuelsController, type: :controller do
         get :fuellast, params: { bike_id: @bike.id}
         expect(response.status).to eq(200)
         expect(response.content_type).to eq("application/json")
-        expect( JSON.parse(response.body)['data']['odometer'] ).to eq(@fuel.odometer)
+        expect( JSON.parse(response.body)['data'] ).to eq(@fuel.odometer)
       end
     end
 

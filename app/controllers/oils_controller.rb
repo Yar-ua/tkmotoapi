@@ -1,10 +1,13 @@
 class OilsController < ApplicationController
-  before_action :authenticate_user!, except: :index
+  before_action :authenticate_user!, only: :create
   before_action :set_bike
 
   def index
-  	@oil = Oil.where(bike_id: 2).order(oil_distance: :desc).first
-  	send_response(@oil, 200)
+  	send_response(@bike.oils, 200)
+  end
+
+  def oillast
+    send_response(@bike.oils.maximum(:oil_distance), 200)
   end
 
   def create

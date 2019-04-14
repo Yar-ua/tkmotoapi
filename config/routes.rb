@@ -14,6 +14,8 @@ Rails.application.routes.draw do
 
     resources :repairs, only: [:index, :create, :update, :destroy]
     resources :oils, only: [:index, :create]
+    match 'oillast', to: 'oils#oillast', via: :get
+
     get '/config' => 'bike_config#show', as: 'bike_config'
     put '/config' => 'bike_config#update', as: 'bike_config_upd'
   end
