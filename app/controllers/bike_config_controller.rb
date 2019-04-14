@@ -22,13 +22,6 @@ class BikeConfigController < ApplicationController
 
   private
 
-  def set_bike
-    @bike = Bike.find(params[:bike_id])
-    rescue ActiveRecord::RecordNotFound
-      send_response(nil, 404, nil, 'Bike not found')
-    return @bike
-  end
-
   def set_bike_config
     if @bike.bike_config == nil
       create_default_config
@@ -39,14 +32,6 @@ class BikeConfigController < ApplicationController
 
   def bike_config_params
     params.require(:bike_config).permit(:oil_change)
-  end
-
-  def current_user_is_bike_owner
-    return true if current_user.id == @bike.user_id
-  end
-
-  def error_not_bike_owner
-    send_response(nil, 422, nil, 'Forbidden - You are not bike owner')
   end
 
   def create_default_config
